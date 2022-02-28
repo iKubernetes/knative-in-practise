@@ -1,0 +1,36 @@
+---
+apiVersion: flows.knative.dev/v1
+kind: Parallel
+metadata:
+  name: filetype-parallel
+  namespace: para
+spec:
+  channelTemplate:
+    apiVersion: messaging.knative.dev/v1
+    kind: InMemoryChannel
+  branches:
+    - filter:
+        ref:
+          apiVersion: serving.knative.dev/v1
+          kind: Service
+          name: image-filter
+      subscriber:
+        ref:
+          apiVersion: serving.knative.dev/v1
+          kind: Service
+          name: para-appender-image
+    - filter:
+        ref:
+          apiVersion: serving.knative.dev/v1
+          kind: Service
+          name: text-filter
+      subscriber:
+        ref:
+          apiVersion: serving.knative.dev/v1
+          kind: Service
+          name: para-appender-text
+  reply:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: event-display

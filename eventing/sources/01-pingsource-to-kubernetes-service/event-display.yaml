@@ -1,0 +1,36 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: event-demo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-display
+  namespace: event-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels: &labels
+      app: event-display
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+        - name: event-display
+          #image: gcr.io/knative-releases/knative.dev/eventing/cmd/event_display
+          image: ikubernetes/event_display
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: event-display
+  namespace: event-demo
+spec:
+  selector:
+    app: event-display
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

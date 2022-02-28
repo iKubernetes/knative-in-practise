@@ -1,0 +1,14 @@
+apiVersion: sources.knative.dev/v1
+kind: PingSource
+metadata:
+  name: ping-00001
+  namespace: event-demo
+spec:
+  schedule: "* * * * *"
+  contentType: "application/json"
+  data: '{"message": "Hello Eventing!"}'
+  sink:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: event-display

@@ -1,0 +1,42 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: sq-appender-01
+  namespace: event-demo
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/knative-releases/knative.dev/eventing/cmd/appender
+          env:
+            - name: MESSAGE
+              value: " - Handled by SQ-01"
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: sq-appender-02
+  namespace: event-demo
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/knative-releases/knative.dev/eventing/cmd/appender
+          env:
+            - name: MESSAGE
+              value: " - Handled by SQ-02"
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: sq-appender-03
+  namespace: event-demo
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/knative-releases/knative.dev/eventing/cmd/appender
+          env:
+            - name: MESSAGE
+              value: " - Handled by SQ-03"
+---

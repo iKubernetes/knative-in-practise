@@ -1,0 +1,26 @@
+apiVersion: sources.knative.dev/v1alpha1
+kind: GitLabSource
+metadata:
+  name: gitlabsource-demo
+  namespace: event-demo
+spec:
+  eventTypes:
+    - push_events
+    - issues_events
+    - merge_requests_events
+    - tag_push_events
+  projectUrl: http://code.gitlab.svc.cluster.local/root/myproject
+  sslverify: false
+  accessToken:
+    secretKeyRef:
+      name: gitlabsecret
+      key: accessToken
+  secretToken:
+    secretKeyRef:
+      name: gitlabsecret
+      key: secretToken
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: event-display

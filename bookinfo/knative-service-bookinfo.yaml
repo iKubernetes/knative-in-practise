@@ -1,0 +1,101 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: details-v1
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/examples-bookinfo-details-v1:1.15.0
+        ports:
+        - containerPort: 9080
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ratings-v1
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/examples-bookinfo-ratings-v1:1.15.0
+        ports:
+        - containerPort: 9080
+
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: reviews-v1
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/examples-bookinfo-reviews-v1:v1-aliyun
+        ports:
+        - containerPort: 9080
+
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: reviews-v2
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/examples-bookinfo-reviews-v2:v1-aliyun
+        ports:
+        - containerPort: 9080
+        env:
+        - name: SERVICES_DOMAIN
+          value: default.svc.cluster.local
+        - name: RATINGS_HOSTNAME
+          value: ratings-v1
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: reviews-v3
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/examples-bookinfo-reviews-v3:v1-aliyun
+        ports:
+        - containerPort: 9080
+        env:
+        - name: SERVICES_DOMAIN
+          value: default.svc.cluster.local
+        - name: RATINGS_HOSTNAME
+          value: ratings-v1
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: productpage-v1
+  namespace: default
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/min-scale: "1"
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/knative-sample/productpage:v1-aliyun
+        ports:
+        - containerPort: 9080
+        env:
+        - name: SERVICES_DOMAIN
+          value: default.svc.cluster.local
+        - name: DETAILS_HOSTNAME
+          value: details-v1
+        - name: RATINGS_HOSTNAME
+          value: ratings-v1
+        - name: REVIEWS_HOSTNAME
+          value: reviews-v2

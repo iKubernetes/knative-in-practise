@@ -1,0 +1,13 @@
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: event-display
+  namespace: event-demo
+spec:
+  template:
+    spec:
+      containers:
+        - image: ikubernetes/event_display
+          ports:
+            - containerPort: 8080

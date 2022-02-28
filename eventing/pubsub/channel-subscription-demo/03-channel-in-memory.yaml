@@ -1,0 +1,9 @@
+apiVersion: messaging.knative.dev/v1
+kind: Channel
+metadata:
+  name: imc01
+  namespace: event-demo
+spec:
+  channelTemplate:
+    apiVersion: messaging.knative.dev/v1
+    kind: InMemoryChannel

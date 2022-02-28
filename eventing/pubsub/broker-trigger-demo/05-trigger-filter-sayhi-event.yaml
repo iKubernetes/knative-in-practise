@@ -1,0 +1,18 @@
+# Maintainer: "MageEdu <mage@magedu.com>"
+# Version: v1.0
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: trigger1
+  namespace: event-demo
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: com.magedu.com.sayhi
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: event-display-hi

@@ -1,0 +1,27 @@
+apiVersion: flows.knative.dev/v1
+kind: Sequence
+metadata:
+  name: sq-demo
+  namespace: flow
+spec:
+  channelTemplate:
+    apiVersion: messaging.knative.dev/v1
+    kind: InMemoryChannel
+  steps:
+    - ref:
+        apiVersion: serving.knative.dev/v1
+        kind: Service
+        name: sq-appender-01
+    - ref:
+        apiVersion: serving.knative.dev/v1
+        kind: Service
+        name: sq-appender-02
+    - ref:
+        apiVersion: serving.knative.dev/v1
+        kind: Service
+        name: sq-appender-03
+  reply:
+    ref:
+      kind: Service
+      apiVersion: serving.knative.dev/v1
+      name: event-display

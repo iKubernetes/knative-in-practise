@@ -1,0 +1,30 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: image-filter
+  namespace: event-demo
+spec:
+  template:
+    spec:
+      containers:
+      - image: villardl/filter-nodejs:0.1
+        env:
+        - name: FILTER
+          value: |
+            event.type == "com.magedu.file.image"
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: text-filter
+  namespace: event-demo
+spec:
+  template:
+    spec:
+      containers:
+      - image: villardl/filter-nodejs:0.1
+        env:
+        - name: FILTER
+          value: |
+            event.type == "com.magedu.file.text"
+---

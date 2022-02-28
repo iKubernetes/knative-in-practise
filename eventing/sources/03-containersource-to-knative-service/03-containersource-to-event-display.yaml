@@ -1,0 +1,24 @@
+apiVersion: sources.knative.dev/v1
+kind: ContainerSource
+metadata:
+  name: containersource-heartbeat
+spec:
+  template:
+    spec:
+      containers:
+        - image: ikubernetes/containersource-heartbeats:latest
+          name: heartbeats
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+  sink:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: event-display

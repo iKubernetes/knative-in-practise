@@ -1,0 +1,29 @@
+# Maintainer: MageEdu <mage@magedu.com>
+# Vesion: v1.0
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: para-appender-image
+spec:
+  template:
+    spec:
+      containers:
+      - image: ikubernetes/appender
+        env:
+        - name: MESSAGE
+          value: " - filetype/Image"
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: para-appender-text
+spec:
+  template:
+    spec:
+      containers:
+      - image: ikubernetes/appender
+        env:
+        - name: MESSAGE
+          value: " - filetype/Text"
+---

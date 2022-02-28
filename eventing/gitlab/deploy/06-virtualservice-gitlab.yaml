@@ -1,0 +1,51 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: gitlab
+  namespace: gitlab
+spec:
+  host: gitlab
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: gitlab-gateway
+  namespace: istio-system
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "gitlab.magedu.com"
+    - "code.magedu.com"
+    - "code.magedu.com"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: gitlab-virtualservice
+  namespace: gitlab
+spec:
+  hosts:
+  - "gitlab.magedu.com"
+  - "code.magedu.com"
+  gateways:
+  - istio-system/gitlab-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: gitlab
+        port:
+          number: 31080
+---

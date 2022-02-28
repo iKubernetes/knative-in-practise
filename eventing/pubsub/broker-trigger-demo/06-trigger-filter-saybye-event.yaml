@@ -1,0 +1,15 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: trigger2
+  namespace: event-demo
+spec:
+  broker: default
+  filter:
+    attributes:
+      type: com.magedu.com.saybye
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: event-display-bye

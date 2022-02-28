@@ -1,0 +1,22 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  template:
+    spec:
+      containers:
+        - image: ikubernetes/helloworld-go
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TARGET
+              value: "Cloud-Native"
+  traffic:
+  - latestRevision: true
+    percent: 0
+    tag: staging
+  - revisionName: hello-00002
+    percent: 90
+  - revisionName: hello-00001
+    percent: 10
