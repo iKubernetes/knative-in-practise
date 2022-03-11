@@ -7,7 +7,7 @@ kubectl create -f 01-kafka-topic-demo.yaml
 
 ### Create Knative Service event-display
 ```
-knbectl service apply event-display --image ikubernetes/event_display --port 8080 --scale-min 1
+kn service apply event-display --image ikubernetes/event_display --port 8080 --scale-min 1
 ```
 
 ### Create KafkaSource demo
