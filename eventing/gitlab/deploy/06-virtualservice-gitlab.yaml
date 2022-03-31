@@ -26,7 +26,6 @@ spec:
     hosts:
     - "gitlab.magedu.com"
     - "code.magedu.com"
-    - "code.magedu.com"
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
