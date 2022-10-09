@@ -2,7 +2,7 @@ apiVersion: flows.knative.dev/v1
 kind: Sequence
 metadata:
   name: sq-demo
-  namespace: flow
+  namespace: event-demo
 spec:
   channelTemplate:
     apiVersion: messaging.knative.dev/v1

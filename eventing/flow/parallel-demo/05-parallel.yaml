@@ -3,7 +3,7 @@ apiVersion: flows.knative.dev/v1
 kind: Parallel
 metadata:
   name: filetype-parallel
-  namespace: para
+  namespace: event-demo
 spec:
   channelTemplate:
     apiVersion: messaging.knative.dev/v1
