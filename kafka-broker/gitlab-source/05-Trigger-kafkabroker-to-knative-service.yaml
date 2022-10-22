@@ -1,0 +1,14 @@
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: kafkabroker-to-knative-service
+  namespace: event-demo
+spec:
+  broker: kbr01
+  filter: {}
+  subscriber:
+    ref:
+      apiVersion: serving.knative.dev/v1
+      kind: Service
+      name: event-display
+      namespace: event-demo
