@@ -6,13 +6,13 @@ spec:
   template:
     metadata:
       # This is the name of our new "Revision," it must follow the convention {service-name}-{revision-name}
-      name: hello-world
+      name: hello-mageedu
     spec:
+      containerConcurrency: 10
       containers:
-        #- image: gcr.io/knative-samples/helloworld-go
-        - image: ikubernetes/helloworld-go
+        - image: ghcr.io/knative/helloworld-go:latest
           ports:
             - containerPort: 8080
           env:
             - name: TARGET
-              value: "World"
+              value: "MageEdu.com"
